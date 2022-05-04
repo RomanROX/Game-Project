@@ -15,7 +15,6 @@ enum PlayerState
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
-    //public float jump;
     public float horizontal;
 
     [SerializeField]
@@ -24,24 +23,22 @@ public class PlayerMovement : MonoBehaviour
     private Transform leftWallPos;
     [SerializeField]
     private Transform rightWallPos;
-    //private bool CanJump = false;
 
     private float lastPressedJumpTime;
     private float lastOnGroundTime;
-    
+
     private float lastOnWallRightTime;
     private float lastOnWallLeftTime;
     private float lastOnWallTime;
 
     private float wallJumpStartTime;
-    private float wallJumpTime=0.35f;
+    private float wallJumpTime = 0.35f;
     private float lastWallJumpDir;
 
     public Vector2 groundCheckRadious;
     public Vector2 wallCheckRadious;
     public LayerMask ground;
 
-    private bool jumpdet = true;
     public bool IsRight = true;
     public bool isJumping;
     private bool isWallJumping;
@@ -51,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpAmount = 35;
     public float gravityScale = 10;
     public float fallingGravityScale = 40;
-    public Vector2 wallJumpForce=new Vector2(9,12);
+    public Vector2 wallJumpForce = new Vector2(9, 12);
 
     public Rigidbody2D rb;
     public Animator childAnim;
@@ -59,17 +56,10 @@ public class PlayerMovement : MonoBehaviour
 
     public float coyoteTime = 0.5f;
     public float jumpBufferTime = 0.5f;
-    public float maxSpeed;
 
-    //public float dragAmount = 0.22f;
-    //public float frictionAmount = 0.55f;
-    //public float runAccel = 9.3f;
-    //public float runDeccel = 15f;
-    ////public float airAccel = 0.65f;
-    ////public float airDeccel = 0.65f;
-    //public float stopPower = 1.23f;
-    //public float turnPower = 1.13f;
-    //public float accelPower = 1.05f;
+    public float runAccel = 9.3f;
+    public float runDeccel = 15f;
+
 
 
     void Start()
@@ -80,9 +70,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Update()
     {
-        //if (Input.GetKey(KeyCode.U))
-        //    Debug.Log("---- " + Time.time);
-
         horizontal = Input.GetAxisRaw("Horizontal");
 
         lastPressedJumpTime -= Time.deltaTime;
@@ -97,31 +84,30 @@ public class PlayerMovement : MonoBehaviour
             if (Physics2D.OverlapBox(feetPos.position, groundCheckRadious, 0f, ground))
                 lastOnGroundTime = coyoteTime;
 
-            if (Physics2D.OverlapBox(leftWallPos.position, wallCheckRadious, 0f, ground)&&!IsRight)
+            if (Physics2D.OverlapBox(leftWallPos.position, wallCheckRadious, 0f, ground) && !IsRight)
                 lastOnWallLeftTime = coyoteTime;
 
-            if (Physics2D.OverlapBox(rightWallPos.position, wallCheckRadious, 0f, ground)&IsRight)
+            if (Physics2D.OverlapBox(rightWallPos.position, wallCheckRadious, 0f, ground) & IsRight)
                 lastOnWallRightTime = coyoteTime;
             lastOnWallTime = Mathf.Max(lastOnWallRightTime, lastOnWallLeftTime);
         }
-        //Debug.Log("vel: " + rb.velocity.y);
         #region JUMP & WALL JUMP
-        if (isJumping = true && rb.velocity.y < 0)
+        if (isJumping && rb.velocity.y <= 0)
         {
-            Debug.Log("is jumping = false");
-            
+
             isJumping = false;
         }
-        if (CanJump() && lastPressedJumpTime>0)
+
+        if (CanJump() && lastPressedJumpTime > 0)
         {
             isJumping = true;
-            Debug.Log("is jumping" + isJumping);
             isWallJumping = false;
             Jump();
         }
-        else if(CanWallJump() && lastPressedJumpTime > 0)
+        else if (CanWallJump() && lastPressedJumpTime > 0)
         {
-            isWallJumping=true;
+            Debug.Log("wall jump?");
+            isWallJumping = true;
             isJumping = false;
             wallJumpStartTime = Time.time;
             lastWallJumpDir = (lastOnWallRightTime > 0) ? -1 : 1;
@@ -135,24 +121,22 @@ public class PlayerMovement : MonoBehaviour
             rb.gravityScale = fallingGravityScale;
 
 
-        if (isWallJumping && Time.time -wallJumpStartTime>wallJumpTime)
-            isWallJumping=false;
+        if (isWallJumping && Time.time - wallJumpStartTime > wallJumpTime)
+            isWallJumping = false;
 
 
         InputCallbacks();
 
         animate();
-        
-        Debug.Log("Playerstate: "+PlayerState_);
+
+        //Debug.Log("Playerstate: "+PlayerState_);
 
 
     }
 
     private void FixedUpdate()
     {
-        //Jump();
         Move();
-
         //if (rb.velocity.y <= 0)
         //{
         //    //rb.velocity = new Vector2(rb.velocity.x, -fallingGravityScale);
@@ -169,15 +153,14 @@ public class PlayerMovement : MonoBehaviour
     }
     private bool CanJump()
     {
-        Debug.Log("is jumping" + isJumping);
-        return lastOnGroundTime>0 && !isJumping;
-        
+        return lastOnGroundTime > 0 && !isJumping;
     }
     private bool CanWallJump()
     {
-        return lastPressedJumpTime > 0 && lastOnWallTime > 0 && lastOnWallTime <= 0 &&
+        bool temp = lastPressedJumpTime > 0 && lastOnWallTime > 0 && lastOnGroundTime <= 0 &&
             (!isWallJumping || (lastOnWallRightTime > 0 && lastWallJumpDir == 1) ||
             (lastOnWallLeftTime > 0 && lastWallJumpDir == -1));
+        return temp;
     }
     private void Jump()
     {
@@ -196,31 +179,34 @@ public class PlayerMovement : MonoBehaviour
         Vector2 force = wallJumpForce;
         force.x *= lastWallJumpDir;
 
-        if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(force.x))
-            force.x -= rb.velocity.x;
-        if (rb.velocity.y<0)
-            force.y-= rb.velocity.y;
+        if (rb.velocity.y < 0)
+            force.y -= rb.velocity.y;
         Debug.Log(force);
 
         rb.AddForce(force, ForceMode2D.Impulse);
     }
+
     private void Move()
     {
         float speedX = speed * horizontal;
-        
-        speedX = Mathf.Lerp(rb.velocity.x, speedX, 1);
+        float force = speedX - rb.velocity.x;
 
-        rb.velocity = new Vector2(speedX, rb.velocity.y);
+        float accelRate;
+        if (lastOnGroundTime > 0)
+            accelRate = (Mathf.Abs(speedX) > 0.01f) ? runAccel : runDeccel;
+        else
+            accelRate = 0.65f;
 
-        //rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+        float final = force * accelRate;
+        rb.AddForce(Vector2.right * final);
     }
     private void animate()
     {
-        Debug.Log("animation");
+        //Debug.Log("animation");
         if (rb.velocity.y==0)
         {
             PlayerState_ = PlayerState.Walking;
-            Debug.Log("walkChexh");
+            //Debug.Log("walkChexh");
         }
         if (rb.velocity.x>0) { IsRight = true; }
         else if (rb.velocity.x<0) { IsRight = false; }
