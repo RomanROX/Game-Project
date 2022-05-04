@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 328108734}
   - component: {fileID: 328108733}
   m_Layer: 7
-  m_Name: Isometric Diamond
+  m_Name: TempEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
