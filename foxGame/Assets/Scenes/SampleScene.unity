@@ -227,7 +227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 246721406}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.64, y: -2.51, z: 0}
+  m_LocalPosition: {x: 0.082, y: -2.199, z: 0}
   m_LocalScale: {x: 1.9721559, y: 0.5134, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -245,6 +245,7 @@ GameObject:
   - component: {fileID: 328108735}
   - component: {fileID: 328108734}
   - component: {fileID: 328108733}
+  - component: {fileID: 328108736}
   m_Layer: 7
   m_Name: TempEnemy
   m_TagString: Untagged
@@ -337,14 +338,27 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 328108732}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.63, y: -3.47, z: 0}
-  m_LocalScale: {x: 2.2852, y: 2.2852, z: 2.2852}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 19.03, y: -3.19, z: 0}
+  m_LocalScale: {x: 1.5921686, y: 1.5921686, z: 1.5921686}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &328108736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328108732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239ce093a4342bc42b285b8a107db404, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 20
 --- !u!1 &343578826
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,7 +1110,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1033798222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.264, y: -2.431, z: 0}
+  m_LocalPosition: {x: 7.07, y: -3.37, z: 0}
   m_LocalScale: {x: 0.65330994, y: 0.65330994, z: 0.65330994}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1159,7 +1173,9 @@ MonoBehaviour:
   attackRange: 0.26
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 16
+    m_Bits: 128
+  attackDamage: 5
+  attackRate: 2
 --- !u!1 &1117598713
 GameObject:
   m_ObjectHideFlags: 0

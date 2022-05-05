@@ -7,22 +7,34 @@ public class PlayerAttackBehaviour : MonoBehaviour
     [SerializeField] Transform attackPoint;
     [SerializeField] float attackRange;
     [SerializeField] LayerMask enemyLayer;
+    [SerializeField] float attackDamage;
+    [SerializeField] float attackRate;
+
+    float attackTimer;
+    List<Collider2D> enemies = new List<Collider2D>();
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.E))
+        attackTimer -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.E) && attackTimer <= 0)
         {
+           // Debug.Log("attack");
             Attack();
+            attackTimer = attackRate;
         }
+
     }
 
     void Attack()
     {
-        List<Collider2D> enemies = new List<Collider2D>(Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer));
+         //   Debug.Log("ya gonna work bro?");
+        enemies = new List<Collider2D>(Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer));
         
         foreach (Collider2D enemy in enemies)
         {
-            Debug.Log("Hit "+enemy.name);
+            //Debug.Log("Hit "+enemy.name);
+            enemy.GetComponent<EnemyBase>().TakeDamage(attackDamage);
         }
     }
 
