@@ -14,8 +14,8 @@ enum PlayerState
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed;
-    public float horizontal;
+    [SerializeField] float speed;
+    [SerializeField] float horizontal;
 
     [SerializeField]
     private Transform feetPos;
@@ -24,44 +24,50 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Transform rightWallPos;
 
-    private float lastPressedJumpTime;
-    private float lastOnGroundTime;
+    float lastPressedJumpTime;
+    float lastOnGroundTime;
+    
+    float lastOnWallRightTime;
+    float lastOnWallLeftTime;
+    float lastOnWallTime;
+    
+    float wallJumpStartTime;
+    float wallJumpTime = 0.35f;
+    float lastWallJumpDir;
 
-    private float lastOnWallRightTime;
-    private float lastOnWallLeftTime;
-    private float lastOnWallTime;
+    [SerializeField] Vector2 groundCheckRadious;
+    [SerializeField] Vector2 wallCheckRadious;
+   
+    [SerializeField] bool IsRight = true;
+    [SerializeField] bool isJumping;
+    bool isWallJumping;
 
-    private float wallJumpStartTime;
-    private float wallJumpTime = 0.35f;
-    private float lastWallJumpDir;
+    PlayerState PlayerState_;
 
-    public Vector2 groundCheckRadious;
-    public Vector2 wallCheckRadious;
-    public LayerMask ground;
+    [SerializeField] float jumpAmount = 35;
+    [SerializeField] float gravityScale = 10;
+    [SerializeField] float fallingGravityScale = 40;
+    [SerializeField] Vector2 wallJumpForce = new Vector2(9, 12);
 
-    public bool IsRight = true;
-    public bool isJumping;
-    private bool isWallJumping;
-
-    private PlayerState PlayerState_;
-
-    public float jumpAmount = 35;
-    public float gravityScale = 10;
-    public float fallingGravityScale = 40;
-    public Vector2 wallJumpForce = new Vector2(9, 12);
-
-    public Rigidbody2D rb;
-    public Animator childAnim;
-
-
-    public float coyoteTime = 0.5f;
-    public float jumpBufferTime = 0.5f;
-
-    public float runAccel = 9.3f;
-    public float runDeccel = 15f;
-    public float airAccel = 0.65f;
+    [SerializeField] Rigidbody2D rb;
+    [SerializeField] Animator childAnim;
 
 
+    [SerializeField] float coyoteTime = 0.5f;
+    [SerializeField] float jumpBufferTime = 0.5f;
+    
+    [SerializeField] float runAccel = 9.3f;
+    [SerializeField] float runDeccel = 15f;
+    [SerializeField] float airAccel = 0.65f;
+
+    float lastDir;
+    float currentDir;
+
+    bool isDashing;
+    int dashesLeft;
+    Vector2 lastDashDir;
+    float dashStartTime;
+    float lastPressedDashTime;
 
     void Start()
     {
@@ -78,17 +84,18 @@ public class PlayerMovement : MonoBehaviour
         lastOnWallLeftTime -= Time.deltaTime;
         lastOnWallRightTime -= Time.deltaTime;
         lastOnWallTime -= Time.deltaTime;
+        lastPressedDashTime-=Time.deltaTime;
 
 
         if (!isJumping)
         {
-            if (Physics2D.OverlapBox(feetPos.position, groundCheckRadious, 0f, ground))
+            if (Physics2D.OverlapBox(feetPos.position, groundCheckRadious, 0f, LayerHolder.Instance.Ground))
                 lastOnGroundTime = coyoteTime;
 
-            if (Physics2D.OverlapBox(leftWallPos.position, wallCheckRadious, 0f, ground) && !IsRight)
+            if (Physics2D.OverlapBox(leftWallPos.position, wallCheckRadious, 0f, LayerHolder.Instance.Ground) && !IsRight)
                 lastOnWallLeftTime = coyoteTime;
 
-            if (Physics2D.OverlapBox(rightWallPos.position, wallCheckRadious, 0f, ground) & IsRight)
+            if (Physics2D.OverlapBox(rightWallPos.position, wallCheckRadious, 0f, LayerHolder.Instance.Ground) & IsRight)
                 lastOnWallRightTime = coyoteTime;
             lastOnWallTime = Mathf.Max(lastOnWallRightTime, lastOnWallLeftTime);
         }
@@ -130,6 +137,8 @@ public class PlayerMovement : MonoBehaviour
 
         animate();
 
+        CheckDir();
+
         //Debug.Log("Playerstate: "+PlayerState_);
 
 
@@ -145,6 +154,14 @@ public class PlayerMovement : MonoBehaviour
         //    PlayerState_ = PlayerState.Falling;
         //}
     }
+
+
+
+
+
+
+
+
     private void InputCallbacks()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -152,6 +169,8 @@ public class PlayerMovement : MonoBehaviour
             lastPressedJumpTime = jumpBufferTime;
         }
     }
+
+
     private bool CanJump()
     {
         return lastOnGroundTime > 0 && !isJumping;
@@ -163,6 +182,8 @@ public class PlayerMovement : MonoBehaviour
             (lastOnWallLeftTime > 0 && lastWallJumpDir == -1));
         return temp;
     }
+
+
     private void Jump()
     {
         lastPressedJumpTime = 0;
@@ -201,6 +222,9 @@ public class PlayerMovement : MonoBehaviour
         float final = force * accelRate;
         rb.AddForce(Vector2.right * final);
     }
+
+
+
     private void animate()
     {
         //Debug.Log("animation");
@@ -212,8 +236,19 @@ public class PlayerMovement : MonoBehaviour
         if (rb.velocity.x>0) { IsRight = true; }
         else if (rb.velocity.x<0) { IsRight = false; }
 
+
         childAnim.SetFloat("PlayerState", (float)PlayerState_);
         childAnim.SetBool("IsRight", IsRight);
+    }
+    void CheckDir()
+    {
+        currentDir = rb.velocity.normalized.x;
+        if (currentDir != lastDir)
+        {
+            GetComponent<PlayerAttackBehaviour>().ChangeAttackPos();
+            lastDir = currentDir;
+        }
+
     }
     //private void OnDrawGizmos()
     //{

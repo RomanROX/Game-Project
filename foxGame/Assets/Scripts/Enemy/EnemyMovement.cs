@@ -6,7 +6,6 @@ public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] float playerDetectionRange;
     [SerializeField] float speed;
-    [SerializeField] LayerMask isPlayer;
     [SerializeField] float runAccel;
     [SerializeField] float runDeccel;
     [SerializeField] float stopDistance;
@@ -39,8 +38,8 @@ public class EnemyMovement : MonoBehaviour
 
     void PlayerProximityCheck()
     {
-        player = new List<Collider2D>(Physics2D.OverlapCircleAll(transform.position, playerDetectionRange, isPlayer));
-        isDetectingPlayer = Physics2D.OverlapCircle(transform.position, playerDetectionRange, isPlayer);
+        player = new List<Collider2D>(Physics2D.OverlapCircleAll(transform.position, playerDetectionRange, LayerHolder.Instance.Player));
+        isDetectingPlayer = Physics2D.OverlapCircle(transform.position, playerDetectionRange, LayerHolder.Instance.Player);
     }
     void Move(float moveDir)
     {
