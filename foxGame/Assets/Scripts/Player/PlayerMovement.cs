@@ -59,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float runAccel = 9.3f;
     public float runDeccel = 15f;
+    public float airAccel = 0.65f;
 
 
 
@@ -195,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
         if (lastOnGroundTime > 0)
             accelRate = (Mathf.Abs(speedX) > 0.01f) ? runAccel : runDeccel;
         else
-            accelRate = 0.65f;
+            accelRate = airAccel;
 
         float final = force * accelRate;
         rb.AddForce(Vector2.right * final);
