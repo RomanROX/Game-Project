@@ -58,10 +58,10 @@ public class PlayerAttackBehaviour : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeDeath);
         //Destroy(gameObject);
     }
-    public void ChangeAttackPos()
-    {
-        attackPoint.Translate(new Vector3(-attackPoint.position.x, attackPoint.position.y));
-    }
+    //public void ChangeAttackPos()
+    //{
+    //    attackPoint.Translate(new Vector3(-attackPoint.position.x, attackPoint.position.y));
+    //}
 
     private void OnDrawGizmosSelected()
     {

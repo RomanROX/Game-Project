@@ -1254,6 +1254,11 @@ MonoBehaviour:
   runAccel: 9.3
   runDeccel: 15
   airAccel: 0.65
+  dashAttackTime: 0.15
+  dashEndTime: 0.1
+  dashBufferTime: 0.05
+  dashAmount: 1
+  dashSpeed: 17
 --- !u!114 &1033798228
 MonoBehaviour:
   m_ObjectHideFlags: 0

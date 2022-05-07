@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] float horizontal;
-
+    
     [SerializeField]
     private Transform feetPos;
     [SerializeField]
@@ -68,6 +68,12 @@ public class PlayerMovement : MonoBehaviour
     Vector2 lastDashDir;
     float dashStartTime;
     float lastPressedDashTime;
+    bool dashAttacking;
+    [SerializeField] float dashAttackTime;
+    [SerializeField] float dashEndTime;
+    [SerializeField] float dashBufferTime;
+    [SerializeField] int dashAmount;
+    [SerializeField] float dashSpeed;
 
     void Start()
     {
@@ -79,15 +85,17 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        lastPressedJumpTime -= Time.deltaTime;
+        #region TIMERS
         lastOnGroundTime -= Time.deltaTime;
         lastOnWallLeftTime -= Time.deltaTime;
         lastOnWallRightTime -= Time.deltaTime;
         lastOnWallTime -= Time.deltaTime;
+
+        lastPressedJumpTime -= Time.deltaTime;
         lastPressedDashTime-=Time.deltaTime;
+        #endregion
 
-
-        if (!isJumping)
+        if (!isJumping && !isDashing)
         {
             if (Physics2D.OverlapBox(feetPos.position, groundCheckRadious, 0f, LayerHolder.Instance.Ground))
                 lastOnGroundTime = coyoteTime;
@@ -101,11 +109,13 @@ public class PlayerMovement : MonoBehaviour
         }
         #region JUMP & WALL JUMP
         if (isJumping && rb.velocity.y <= 0)
-        {
-
             isJumping = false;
-        }
 
+        if (isWallJumping && Time.time - wallJumpStartTime > wallJumpTime)
+            isWallJumping = false;
+
+        if (!isDashing)
+        {
         if (CanJump() && lastPressedJumpTime > 0)
         {
             isJumping = true;
@@ -114,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (CanWallJump() && lastPressedJumpTime > 0)
         {
-            Debug.Log("wall jump?");
+            //Debug.Log("wall jump?");
             isWallJumping = true;
             isJumping = false;
             wallJumpStartTime = Time.time;
@@ -122,16 +132,47 @@ public class PlayerMovement : MonoBehaviour
 
             WallJump();
         }
+        }
         #endregion
-        if (rb.velocity.y >= 0)
-            rb.gravityScale = gravityScale;
-        else
-            rb.gravityScale = fallingGravityScale;
 
+        if (!isDashing)
+        {
+            if (rb.velocity.y >= 0)
+                rb.gravityScale = gravityScale;
+            else
+                rb.gravityScale = fallingGravityScale;
+        }
 
-        if (isWallJumping && Time.time - wallJumpStartTime > wallJumpTime)
+        if (DashAttackOver())
+        {
+            Debug.Log("dash over");
+            if (dashAttacking)
+            {
+                dashAttacking = false;
+                StopDash(lastDashDir);
+            }
+            else if (Time.time - dashStartTime > dashAttackTime + dashEndTime)
+                isDashing = false;
+        }
+
+        if (CanDash() && lastPressedDashTime>0)
+        {
+            Debug.Log("can dash");
+            if (horizontal != 0)
+                lastDashDir = Vector2.right * horizontal;
+            else
+                lastDashDir = IsRight ? Vector2.right : Vector2.left;
+
+            dashStartTime = Time.time;
+            dashesLeft--;
+            dashAttacking = true;
+
+            isDashing=true;
+            isJumping = false;
             isWallJumping = false;
 
+            StartDash(lastDashDir);
+        }
 
         InputCallbacks();
 
@@ -168,6 +209,12 @@ public class PlayerMovement : MonoBehaviour
         {
             lastPressedJumpTime = jumpBufferTime;
         }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Debug.Log("pressed dash");
+            lastPressedDashTime = dashBufferTime;
+        }
     }
 
 
@@ -182,7 +229,19 @@ public class PlayerMovement : MonoBehaviour
             (lastOnWallLeftTime > 0 && lastWallJumpDir == -1));
         return temp;
     }
-
+    bool CanDash()
+    {
+        if (dashesLeft < dashAmount && lastOnGroundTime > 0)
+            dashesLeft = dashAmount;
+        Debug.Log("(return) can dash? " + (dashesLeft > 0));
+        return dashesLeft > 0;
+    }
+    bool DashAttackOver()
+    {
+        bool temp = isDashing && Time.time - dashStartTime > dashAttackTime;
+        Debug.Log("(return) dash is over? "+temp);
+        return temp;
+    }
 
     private void Jump()
     {
@@ -203,7 +262,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (rb.velocity.y < 0)
             force.y -= rb.velocity.y;
-        Debug.Log(force);
+        //Debug.Log(force);
 
         rb.AddForce(force, ForceMode2D.Impulse);
     }
@@ -223,7 +282,27 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(Vector2.right * final);
     }
 
+    void StartDash(Vector2 dir)
+    {
+        Debug.Log("should start dash");
+        lastOnGroundTime = 0;
+        lastPressedDashTime = 0;
 
+        rb.gravityScale = 0;
+        rb.velocity = dir.normalized * dashSpeed;
+    }
+    void StopDash(Vector2 dir)
+    {
+        Debug.Log("should stop dash");
+        rb.gravityScale = gravityScale;
+
+        if (dir.y>0)
+        {
+            //if (dir.x==0)
+            //    rb.AddForce()
+            rb.AddForce(Vector2.down * rb.velocity.y, ForceMode2D.Impulse);
+        }
+    }
 
     private void animate()
     {
@@ -245,7 +324,7 @@ public class PlayerMovement : MonoBehaviour
         currentDir = rb.velocity.normalized.x;
         if (currentDir != lastDir)
         {
-            GetComponent<PlayerAttackBehaviour>().ChangeAttackPos();
+            //GetComponent<PlayerAttackBehaviour>().ChangeAttackPos();
             lastDir = currentDir;
         }
 
