@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9497a65e94a83f64d84ca860c5f85ac2
+guid: ce8a81ce601cb4742a3aff118d5573d5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,43 +104,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tempAbility_0
+      name: fox_jummp_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 19
-        width: 23
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 3
+        width: 30
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1aca8bd1c953b542a25c9c19db2eda2
-      internalID: 1408810987
+      spriteID: 339e7a182c016de49a31832b61081fec
+      internalID: -169551474
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tempAbility_1
+      name: fox_jummp_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 23
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 33
+        y: 3
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9bec8b01206d65e49a1e33e28faf8712
-      internalID: -1892485742
+      spriteID: 1887f8d7a529c8a4c929263b84636ca0
+      internalID: 1427088579
       vertices: []
       indices: 
       edges: []
@@ -156,8 +156,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      tempAbility_0: 1408810987
-      tempAbility_1: -1892485742
+      fox_jummp_1: 1427088579
+      fox_jummp_0: -169551474
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

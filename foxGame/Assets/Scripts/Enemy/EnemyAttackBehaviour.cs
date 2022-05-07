@@ -11,7 +11,8 @@ public class EnemyAttackBehaviour : MonoBehaviour
     float currentHealth;
 
     [Header("Attack")]
-    [SerializeField] Transform attackPoint;
+    [SerializeField] Transform leftAttackPoint;
+    [SerializeField] Transform rightAttackPoint;
     [SerializeField] float attackRange;
     [SerializeField] float attackDamage;
     [SerializeField] float attackRate;
@@ -72,16 +73,17 @@ public class EnemyAttackBehaviour : MonoBehaviour
 
     void CheckForPlayer()
     {
-        players = new List<Collider2D>(Physics2D.OverlapCircleAll(attackPoint.position, attackRange, LayerHolder.Instance.Player));
+        players = new List<Collider2D>();
+
+        players.AddRange(Physics2D.OverlapCircleAll(leftAttackPoint.position, attackRange, LayerHolder.Instance.Player));
+        players.AddRange(Physics2D.OverlapCircleAll(rightAttackPoint.position, attackRange, LayerHolder.Instance.Player));
     }
-    public void ChangeAttackPos()
-    {
-        attackPoint.Translate(new Vector3(-attackPoint.position.x, attackPoint.position.y));
-    }
+    
     private void OnDrawGizmosSelected()
     {
-        if (attackPoint == null) return;
+        if (rightAttackPoint == null || leftAttackPoint==null) return;
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(leftAttackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(rightAttackPoint.position, attackRange);
     }
 }

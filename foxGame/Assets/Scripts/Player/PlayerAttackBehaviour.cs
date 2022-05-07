@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerAttackBehaviour : MonoBehaviour
 {
     [Header("Attack")]
-    [SerializeField] Transform attackPoint;
+    [SerializeField] Transform leftAttackPoint;
+    [SerializeField] Transform rightAttackPoint;
     [SerializeField] float attackRange;
     [SerializeField] float attackDamage;
     [SerializeField] float attackRate;
@@ -39,7 +40,9 @@ public class PlayerAttackBehaviour : MonoBehaviour
 
     void Attack()
     {
-        enemies = new List<Collider2D>(Physics2D.OverlapCircleAll(attackPoint.position, attackRange, LayerHolder.Instance.Enemy));
+        enemies = new List<Collider2D>();
+        enemies.AddRange(Physics2D.OverlapCircleAll(leftAttackPoint.position, attackRange, LayerHolder.Instance.Enemy));
+        enemies.AddRange(Physics2D.OverlapCircleAll(rightAttackPoint.position, attackRange, LayerHolder.Instance.Enemy));
         
         foreach (Collider2D enemy in enemies)
         {
@@ -59,14 +62,11 @@ public class PlayerAttackBehaviour : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeDeath);
         //Destroy(gameObject);
     }
-    //public void ChangeAttackPos()
-    //{
-    //    attackPoint.Translate(new Vector3(-attackPoint.position.x, attackPoint.position.y));
-    //}
 
     private void OnDrawGizmosSelected()
     {
-        if (attackPoint == null) return;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        if (leftAttackPoint == null || rightAttackPoint==null) return;
+        Gizmos.DrawWireSphere(leftAttackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(rightAttackPoint.position, attackRange);
     }
 }

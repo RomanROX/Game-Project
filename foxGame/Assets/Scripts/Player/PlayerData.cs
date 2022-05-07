@@ -24,7 +24,7 @@ public class PlayerData : MonoBehaviour
     public float gravityScale = 10;
     public float fallingGravityScale = 7;
     public float dashSpeed = 20;
-    public Vector2 wallJumpForce = new Vector2(9, 12);
+    public Vector2 wallJumpForce = new Vector2(15, 20);
     
     public int dashAmount = 1;
     public int jumpAmount = 1;

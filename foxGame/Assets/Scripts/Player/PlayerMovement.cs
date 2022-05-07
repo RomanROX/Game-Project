@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 enum PlayerState
 {
+    Idle,
     Walking,
     Jumping,
     Falling,
-    InWall,
+    WallJumping,
     Dashing,
     Attacking
 }
@@ -23,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     PlayerData data;
     Rigidbody2D rb;
-    Animator childAnim;
+    Animator anim;
 
     float horizontal;
     float lastDir;
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        childAnim = gameObject.GetComponentInChildren<Animator>();
+        anim = GetComponent<Animator>();
         data = GameManager.Instance.PlayerData;
     }
 
@@ -100,13 +101,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isDashing)
         {
-            if (CanJump() && lastPressedJumpTime > 0)
-            {
-                isJumping = true;
-                isWallJumping = false;
-                Jump();
-            }
-            else if (CanWallJump() && lastPressedJumpTime > 0)
+            if (CanWallJump() && lastPressedJumpTime > 0)
             {
                 //Debug.Log("wall jump?");
                 isWallJumping = true;
@@ -115,6 +110,12 @@ public class PlayerMovement : MonoBehaviour
                 lastWallJumpDir = (lastOnWallRightTime > 0) ? -1 : 1;
 
                 WallJump();
+            }
+            else if (CanJump() && lastPressedJumpTime > 0)
+            {
+                isJumping = true;
+                isWallJumping = false;
+                Jump();
             }
         }
         #endregion
@@ -137,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (Time.time - dashStartTime > data.dashAttackTime + data.dashEndTime)
                 isDashing = false;
+            //PlayerState_ = PlayerState.Idle;
         }
 
         if (CanDash() && lastPressedDashTime>0)
@@ -160,9 +162,9 @@ public class PlayerMovement : MonoBehaviour
 
         InputCallbacks();
 
+
         animate();
 
-        CheckDir();
 
         //Debug.Log("Playerstate: "+PlayerState_);
 
@@ -201,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
         if (lastOnGroundTime > 0 && jumpsLeft < data.jumpAmount)
             jumpsLeft = data.jumpAmount;
 
-        return jumpsLeft > 0 && lastOnWallTime <=0 ;
+        return jumpsLeft > 0 /*&& lastOnWallTime <=0*/ ;
     }
     private bool CanWallJump()
     {
@@ -220,11 +222,13 @@ public class PlayerMovement : MonoBehaviour
     {
         //bool temp = isDashing && Time.time - dashStartTime > dashAttackTime;
         //Debug.Log("(return) dash is over? "+temp);
+        
         return isDashing && Time.time - dashStartTime > data.dashAttackTime;
     }
 
     private void Jump()
     {
+        PlayerState_ = PlayerState.Jumping;
         lastPressedJumpTime = 0;
         lastOnGroundTime = 0;
         jumpsLeft--;
@@ -235,6 +239,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void WallJump()
     {
+        PlayerState_ = PlayerState.Jumping;
         lastPressedJumpTime = 0;
         lastOnGroundTime = 0;
         lastOnWallLeftTime = 0;
@@ -252,6 +257,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
+        
         float speedX = data.speed * horizontal;
         float force = speedX - rb.velocity.x;
 
@@ -281,37 +287,35 @@ public class PlayerMovement : MonoBehaviour
 
         if (dir.y>0)
         {
-            //if (dir.x==0)
-            //    rb.AddForce()
+
             rb.AddForce(Vector2.down * rb.velocity.y, ForceMode2D.Impulse);
         }
     }
 
     private void animate()
     {
-        //Debug.Log("animation");
-        if (rb.velocity.y==0)
-        {
-            PlayerState_ = PlayerState.Walking;
-            //Debug.Log("walkChexh");
-        }
+
         if (rb.velocity.x>0) { IsRight = true; }
         else if (rb.velocity.x<0) { IsRight = false; }
 
+        
+        if (rb.velocity.x!=0 && !isJumping && !isDashing && !isWallJumping)
+            PlayerState_ = PlayerState.Walking;
 
-        childAnim.SetFloat("PlayerState", (float)PlayerState_);
-        childAnim.SetBool("IsRight", IsRight);
-    }
-    void CheckDir()
-    {
-        currentDir = rb.velocity.normalized.x;
-        if (currentDir != lastDir)
-        {
-            //GetComponent<PlayerAttackBehaviour>().ChangeAttackPos();
-            lastDir = currentDir;
-        }
+        if ((horizontal==0 || rb.velocity==Vector2.zero) && !isJumping)
+            PlayerState_ = PlayerState.Idle;
 
+        if (rb.velocity.y<0)
+            PlayerState_ = PlayerState.Falling;
+
+        if (isDashing)
+            PlayerState_ = PlayerState.Dashing;
+
+
+        anim.SetInteger("State", (int)PlayerState_);
+        anim.SetBool("isRight", IsRight);
     }
+    
 
     public void UnlockAbility(ItemType type)
     {

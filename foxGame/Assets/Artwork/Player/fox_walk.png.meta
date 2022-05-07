@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5b02bb4b77874f24b9e6e08b41186d8e
+guid: d6b5d49c5034b064c9d277dc32409b35
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -104,253 +104,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: right
+      name: fox_walk_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 81
-        width: 23
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 3
+        width: 30
+        height: 25
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dabad086b313652499646d39cee880cd
-      internalID: 1885858395
+      spriteID: 7baa99103649f15438742edcf0f2e218
+      internalID: -1653704704
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rightJump
+      name: fox_walk_1
       rect:
         serializedVersion: 2
-        x: 45
-        y: 81
-        width: 23
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 33
+        y: 3
+        width: 30
+        height: 25
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c857758df7a70048896b1d4a2ae560a
-      internalID: -696096462
+      spriteID: c4073ac116a4e62459225128ae84c360
+      internalID: 181826550
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rightAtck
+      name: fox_walk_2
       rect:
         serializedVersion: 2
-        x: 88
-        y: 81
-        width: 23
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 65
+        y: 3
+        width: 30
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f547943dacc7dd4ba5e36c1b54c78bb
-      internalID: 72470967
+      spriteID: cc987cd9d990f5a4099fe3bce194ad96
+      internalID: -1700019801
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: left
+      name: fox_walk_3
       rect:
         serializedVersion: 2
-        x: 12
-        y: 59
-        width: 23
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 97
+        y: 3
+        width: 30
+        height: 25
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a382ce7f87321f643b2ff804235e549a
-      internalID: 1599539535
+      spriteID: 0ecf4882e0fe28e49b768a51a02a6311
+      internalID: -406168599
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: leftJump
+      name: fox_walk_4
       rect:
         serializedVersion: 2
-        x: 45
-        y: 59
-        width: 23
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 129
+        y: 3
+        width: 30
+        height: 25
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 01cb744ee60967443b3165a56cb11a75
-      internalID: -149766569
+      spriteID: 40a4b3b2d803bc447a440302e52e9e28
+      internalID: 615993860
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: leftAtck
+      name: fox_walk_5
       rect:
         serializedVersion: 2
-        x: 88
-        y: 59
-        width: 23
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 161
+        y: 3
+        width: 30
+        height: 25
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8d7c30db76030e42a78dfd0883b5580
-      internalID: -1617483443
+      spriteID: 858d95eb2f9ae7340992864075dabbbd
+      internalID: -1991077571
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rightFall
+      name: fox_walk_6
       rect:
         serializedVersion: 2
-        x: 11
-        y: 34
-        width: 23
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 193
+        y: 3
+        width: 30
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: addc46326ff4a5c419a20acff16f5633
-      internalID: -1974739746
+      spriteID: 1532c329771c44e40b15daaae0299183
+      internalID: 1886790436
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: rightWall
+      name: fox_walk_7
       rect:
         serializedVersion: 2
-        x: 51
-        y: 34
-        width: 23
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 225
+        y: 3
+        width: 30
+        height: 25
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7739975e2365caf4681facec58f5363c
-      internalID: 1762262018
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: rightDash
-      rect:
-        serializedVersion: 2
-        x: 91
-        y: 36
-        width: 23
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b1c8b7964f25d7f44b2d4a1bf89b1e4d
-      internalID: 639657296
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: leftFall
-      rect:
-        serializedVersion: 2
-        x: 11
-        y: 12
-        width: 23
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e05f93f17c7c48a4fa29238a66bf62a7
-      internalID: -1414036724
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: leftWall
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 12
-        width: 23
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3ae00bbff98719f4da2a9ce97e372581
-      internalID: -189144650
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: leftDash
-      rect:
-        serializedVersion: 2
-        x: 91
-        y: 14
-        width: 23
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f5f106093a0ad974f830f5bd044e5d83
-      internalID: 1258131827
+      spriteID: f457be45ef2ed70479140ef42e6b6d20
+      internalID: -528468716
       vertices: []
       indices: 
       edges: []
@@ -366,32 +282,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      rightFall: -1974739746
-      game_13: 1640594113
-      game_22: -100923323
-      rightWall: 1762262018
-      game_17: -81536669
-      leftAtck: -1617483443
-      leftWall: -189144650
-      game_23: -1616439811
-      rightJump: -696096462
-      leftDash: 1258131827
-      game_19: -507856204
-      game_16: -122625052
-      rightDash: 639657296
-      game_18: 901056783
-      leftFall: -1414036724
-      game_15: 1406304876
-      rightAtck: 72470967
-      leftJump: -149766569
-      game_12: 1738510855
-      game_25: -1612966318
-      game_21: -1955529641
-      right: 1885858395
-      game_14: 588080323
-      game_20: -1846257207
-      game_24: 488893720
-      left: 1599539535
+      fox_walk_4: 615993860
+      fox_walk_1: 181826550
+      fox_walk_6: 1886790436
+      fox_walk_3: -406168599
+      fox_walk_0: -1653704704
+      fox_walk_2: -1700019801
+      fox_walk_7: -528468716
+      fox_walk_5: -1991077571
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
