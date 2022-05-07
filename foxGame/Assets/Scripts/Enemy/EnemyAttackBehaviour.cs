@@ -7,6 +7,7 @@ public class EnemyAttackBehaviour : MonoBehaviour
     [Header("Health")]
     [SerializeField] float maxHealth;
     [SerializeField] float timeBeforeDeath;
+    [SerializeField] float timeBeforeAttack;
     float currentHealth;
 
     [Header("Attack")]
@@ -14,6 +15,7 @@ public class EnemyAttackBehaviour : MonoBehaviour
     [SerializeField] float attackRange;
     [SerializeField] float attackDamage;
     [SerializeField] float attackRate;
+    [SerializeField] GameObject drop;
 
     float attackTimer;
     List<Collider2D> players = new List<Collider2D>();
@@ -30,18 +32,19 @@ public class EnemyAttackBehaviour : MonoBehaviour
 
         if (players.Count > 0 && attackTimer <= 0)
         {
-            Attack();
+            StartCoroutine(Attack());
             attackTimer = attackRate;
         }
     }
 
-    void Attack()
-    {
-        //players[0].GetComponent<EnemyAttackBehaviour>().TakeDamage(attackDamage);
+   
 
+    IEnumerator Attack()
+    {
+        yield return new WaitForSeconds(timeBeforeAttack);
         foreach (Collider2D player in players)
         {
-            player.GetComponent<PlayerAttackBehaviour>().TakeDamage(attackDamage);
+            player.GetComponent<PlayerAttackBehaviour>().SetHealth(-attackDamage);
         }
     }
 
@@ -53,8 +56,18 @@ public class EnemyAttackBehaviour : MonoBehaviour
     }
     IEnumerator Die()
     {
+        Debug.Log("die?");
         yield return new WaitForSeconds(timeBeforeDeath);
+        DropItem();
         Destroy(gameObject);
+    }
+
+    void DropItem()
+    {
+        if (drop != null)
+        {
+            Instantiate(drop, new Vector3(transform.position.x, transform.position.y+0.2f), Quaternion.identity);
+        }
     }
 
     void CheckForPlayer()

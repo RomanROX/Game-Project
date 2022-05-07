@@ -11,18 +11,18 @@ public class PlayerAttackBehaviour : MonoBehaviour
     [SerializeField] float attackRate;
 
     [Header("Health")]
-    [SerializeField] float maxHealth;
     [SerializeField] float timeBeforeDeath;
 
     [SerializeField] bool isRight;
 
     float currentHealth;
+    public float CurrentHealth => currentHealth;
     float attackTimer;
     List<Collider2D> enemies = new List<Collider2D>();
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        currentHealth = GameManager.Instance.PlayerData.playerHealthNum;
     }
     private void Update()
     {
@@ -30,6 +30,7 @@ public class PlayerAttackBehaviour : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && attackTimer <= 0)
         {
+            Debug.Log("should Attack");
             Attack();
             attackTimer = attackRate;
         }
@@ -45,10 +46,10 @@ public class PlayerAttackBehaviour : MonoBehaviour
             enemy.GetComponent<EnemyAttackBehaviour>().TakeDamage(attackDamage);
         }
     }
-    public void TakeDamage(float dmg)
+    public void SetHealth(float num)
     {
-        currentHealth -= dmg;
-
+        currentHealth += num;
+        Debug.Log("Player health: " + currentHealth);
         if (currentHealth <= 0) StartCoroutine(Die());
     }
 

@@ -17,31 +17,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Vector2 groundCheckRadious;
     [SerializeField] Vector2 wallCheckRadious;
     
-    [SerializeField] float speed;
-    [SerializeField] float jumpSpeed = 20;
-    [SerializeField] float gravityScale = 10;
-    [SerializeField] float fallingGravityScale = 40;
-    [SerializeField] Vector2 wallJumpForce = new Vector2(9, 12);
-    
     [SerializeField] Transform feetPos;
     [SerializeField] Transform leftWallPos;
     [SerializeField] Transform rightWallPos;
-    
-    [SerializeField] float coyoteTime = 0.5f;
-    [SerializeField] float jumpBufferTime = 0.5f;
-    
-    [SerializeField] float runAccel = 9.3f;
-    [SerializeField] float runDeccel = 15f;
-    [SerializeField] float airAccel = 0.65f;
-    
-    [SerializeField] float wallJumpTime = 0.35f;
-    [SerializeField] float dashAttackTime = 0.15f;
-    [SerializeField] float dashEndTime = 0.1f;
-    [SerializeField] float dashBufferTime = 0.05f;
-    [SerializeField] float dashSpeed = 30;
-    [SerializeField] int dashAmount = 1;
-    [SerializeField] int jumpAmount = 1;
-    
+
+    PlayerData data;
     Rigidbody2D rb;
     Animator childAnim;
 
@@ -74,8 +54,7 @@ public class PlayerMovement : MonoBehaviour
     int dashesLeft;
     int jumpsLeft;
 
-    bool isDashUnlocked;
-    bool isWallJumpUnlocked;
+
 
     PlayerState PlayerState_;
 
@@ -83,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         childAnim = gameObject.GetComponentInChildren<Animator>();
+        data = GameManager.Instance.PlayerData;
     }
 
     public void Update()
@@ -102,20 +82,20 @@ public class PlayerMovement : MonoBehaviour
         if (!isJumping && !isDashing)
         {
             if (Physics2D.OverlapBox(feetPos.position, groundCheckRadious, 0f, LayerHolder.Instance.Ground))
-                lastOnGroundTime = coyoteTime;
+                lastOnGroundTime = data.coyoteTime;
 
             if (Physics2D.OverlapBox(leftWallPos.position, wallCheckRadious, 0f, LayerHolder.Instance.Ground) && !IsRight)
-                lastOnWallLeftTime = coyoteTime;
+                lastOnWallLeftTime = data.coyoteTime;
 
             if (Physics2D.OverlapBox(rightWallPos.position, wallCheckRadious, 0f, LayerHolder.Instance.Ground) & IsRight)
-                lastOnWallRightTime = coyoteTime;
+                lastOnWallRightTime = data.coyoteTime;
             lastOnWallTime = Mathf.Max(lastOnWallRightTime, lastOnWallLeftTime);
         }
         #region JUMP & WALL JUMP
         if (isJumping && rb.velocity.y <= 0)
             isJumping = false;
 
-        if (isWallJumping && Time.time - wallJumpStartTime > wallJumpTime)
+        if (isWallJumping && Time.time - wallJumpStartTime > data.wallJumpTime)
             isWallJumping = false;
 
         if (!isDashing)
@@ -142,9 +122,9 @@ public class PlayerMovement : MonoBehaviour
         if (!isDashing)
         {
             if (rb.velocity.y >= 0)
-                rb.gravityScale = gravityScale;
+                rb.gravityScale = data.gravityScale;
             else
-                rb.gravityScale = fallingGravityScale;
+                rb.gravityScale = data.fallingGravityScale;
         }
 
         if (DashAttackOver())
@@ -155,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
                 dashAttacking = false;
                 StopDash(lastDashDir);
             }
-            else if (Time.time - dashStartTime > dashAttackTime + dashEndTime)
+            else if (Time.time - dashStartTime > data.dashAttackTime + data.dashEndTime)
                 isDashing = false;
         }
 
@@ -195,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
         if (rb.velocity.y <= 0)
         {
             //rb.velocity = new Vector2(rb.velocity.x, -fallingGravityScale);
-            rb.AddForce(new Vector2(0, -fallingGravityScale), ForceMode2D.Force);
+            rb.AddForce(new Vector2(0, -data.fallingGravityScale), ForceMode2D.Force);
             PlayerState_ = PlayerState.Falling;
         }
     }
@@ -205,21 +185,21 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            lastPressedJumpTime = jumpBufferTime;
+            lastPressedJumpTime = data.jumpBufferTime;
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             Debug.Log("pressed dash");
-            lastPressedDashTime = dashBufferTime;
+            lastPressedDashTime = data.dashBufferTime;
         }
     }
 
 
     private bool CanJump()
     {
-        if (lastOnGroundTime > 0 && jumpsLeft < jumpAmount)
-            jumpsLeft = jumpAmount;
+        if (lastOnGroundTime > 0 && jumpsLeft < data.jumpAmount)
+            jumpsLeft = data.jumpAmount;
 
         return jumpsLeft > 0 && lastOnWallTime <=0 ;
     }
@@ -227,20 +207,20 @@ public class PlayerMovement : MonoBehaviour
     {
         return lastPressedJumpTime > 0 && lastOnWallTime > 0 && lastOnGroundTime <= 0 &&
             (!isWallJumping || (lastOnWallRightTime > 0 && lastWallJumpDir == 1) ||
-            (lastOnWallLeftTime > 0 && lastWallJumpDir == -1)) && isWallJumpUnlocked;
+            (lastOnWallLeftTime > 0 && lastWallJumpDir == -1)) && data.isWallJumpUnlocked;
     }
     bool CanDash()
     {
-        if (dashesLeft < dashAmount && lastOnGroundTime > 0)
-            dashesLeft = dashAmount;
-        Debug.Log("(return) can dash? " + (dashesLeft > 0));
-        return dashesLeft > 0 && isDashUnlocked;
+        if (dashesLeft < data.dashAmount && lastOnGroundTime > 0)
+            dashesLeft = data.dashAmount;
+        //Debug.Log("(return) can dash? " + (dashesLeft > 0));
+        return dashesLeft > 0 && data.isDashUnlocked;
     }
     bool DashAttackOver()
     {
         //bool temp = isDashing && Time.time - dashStartTime > dashAttackTime;
         //Debug.Log("(return) dash is over? "+temp);
-        return isDashing && Time.time - dashStartTime > dashAttackTime;
+        return isDashing && Time.time - dashStartTime > data.dashAttackTime;
     }
 
     private void Jump()
@@ -248,8 +228,10 @@ public class PlayerMovement : MonoBehaviour
         lastPressedJumpTime = 0;
         lastOnGroundTime = 0;
         jumpsLeft--;
-
-        rb.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
+        if (rb.velocity.y != 0)
+            rb.AddForce(Vector2.up * data.jumpSpeed * 1.5f, ForceMode2D.Impulse);
+        else
+            rb.AddForce(Vector2.up * data.jumpSpeed, ForceMode2D.Impulse);
     }
     private void WallJump()
     {
@@ -258,7 +240,7 @@ public class PlayerMovement : MonoBehaviour
         lastOnWallLeftTime = 0;
         lastOnWallRightTime = 0;
 
-        Vector2 force = wallJumpForce;
+        Vector2 force = data.wallJumpForce;
         force.x *= lastWallJumpDir;
 
         if (rb.velocity.y < 0)
@@ -270,14 +252,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        float speedX = speed * horizontal;
+        float speedX = data.speed * horizontal;
         float force = speedX - rb.velocity.x;
 
         float accelRate;
         if (lastOnGroundTime > 0)
-            accelRate = (Mathf.Abs(speedX) > 0.01f) ? runAccel : runDeccel;
+            accelRate = (Mathf.Abs(speedX) > 0.01f) ? data.runAccel : data.runDeccel;
         else
-            accelRate = airAccel;
+            accelRate = data.airAccel;
 
         float final = force * accelRate;
         rb.AddForce(Vector2.right * final);
@@ -285,17 +267,17 @@ public class PlayerMovement : MonoBehaviour
 
     void StartDash(Vector2 dir)
     {
-        Debug.Log("should start dash");
+        //Debug.Log("should start dash");
         lastOnGroundTime = 0;
         lastPressedDashTime = 0;
 
         rb.gravityScale = 0;
-        rb.velocity = dir.normalized * dashSpeed;
+        rb.velocity = dir.normalized * data.dashSpeed;
     }
     void StopDash(Vector2 dir)
     {
-        Debug.Log("should stop dash");
-        rb.gravityScale = gravityScale;
+        //Debug.Log("should stop dash");
+        rb.gravityScale = data.gravityScale;
 
         if (dir.y>0)
         {
@@ -335,11 +317,20 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.Log("done did do");
         if (type == ItemType.DashAbility)
-            isDashUnlocked = true;
+            data.isDashUnlocked = true;
         else if (type == ItemType.DoubleJumpAbility)
-            jumpAmount = 2;
+            data.jumpAmount = 2;
         else if (type == ItemType.WallJumpAbility)
-            isWallJumpUnlocked = true;
+            data.isWallJumpUnlocked = true;
+        else if (type == ItemType.HeartContainer)
+        {
+            PlayerAttackBehaviour player = GetComponent<PlayerAttackBehaviour>();
+            if (player.CurrentHealth<data.playerHealthNum)
+            {
+                player.SetHealth(1);
+            }
+        }
+            
 
     }
 }
