@@ -208,8 +208,8 @@ public class PlayerMovement : MonoBehaviour
     private bool CanWallJump()
     {
         return lastPressedJumpTime > 0 && lastOnWallTime > 0 && lastOnGroundTime <= 0 &&
-            (!isWallJumping || (lastOnWallRightTime > 0 && lastWallJumpDir == 1) ||
-            (lastOnWallLeftTime > 0 && lastWallJumpDir == -1)) && data.isWallJumpUnlocked;
+            (!isWallJumping || (lastOnWallRightTime > 0 && lastWallJumpDir == -1) ||
+            (lastOnWallLeftTime > 0 && lastWallJumpDir == 1)) && data.isWallJumpUnlocked;
     }
     bool CanDash()
     {
@@ -232,7 +232,7 @@ public class PlayerMovement : MonoBehaviour
         lastPressedJumpTime = 0;
         lastOnGroundTime = 0;
         jumpsLeft--;
-        if (rb.velocity.y != 0)
+        if (lastOnGroundTime>0)
             rb.AddForce(Vector2.up * data.jumpSpeed * 1.5f, ForceMode2D.Impulse);
         else
             rb.AddForce(Vector2.up * data.jumpSpeed, ForceMode2D.Impulse);

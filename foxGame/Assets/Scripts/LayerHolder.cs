@@ -13,8 +13,9 @@ public class LayerHolder : MonoBehaviour
     public LayerMask Ground => ground;
     public LayerMask Enemy => enemy;
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
+        Debug.Log(Instance);
     }
 }
