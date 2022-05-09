@@ -1660,13 +1660,13 @@ GameObject:
   - component: {fileID: 1035528253}
   - component: {fileID: 1035528252}
   - component: {fileID: 1035528254}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wolf
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &1035528249
 Animator:
   serializedVersion: 4
@@ -1775,7 +1775,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1035528253
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1818,11 +1818,11 @@ MonoBehaviour:
   timeBeforeDeath: 0
   attackRange: {x: 0.98, y: 2.49}
   attackDamage: 1
-  dashTime: 10
+  dashTime: 1
   drop: {fileID: 0}
   attackPos: {fileID: 2041242809}
   sightRange: 5.66
-  chargeTime: 1
+  chargeTime: 5
   speed: 5
 --- !u!1 &1046530239
 GameObject:
@@ -1867,13 +1867,14 @@ GameObject:
   - component: {fileID: 1095448707}
   - component: {fileID: 1095448706}
   - component: {fileID: 1095448709}
+  - component: {fileID: 1095448710}
   m_Layer: 0
   m_Name: Owl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &1095448706
 Animator:
   serializedVersion: 4
@@ -1954,7 +1955,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1095448705}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.406919, y: 1.2012007, z: 0}
+  m_LocalPosition: {x: 21.31, y: -3.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1971,10 +1972,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.035396576, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1985,8 +1986,29 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.375, y: 2.125}
+  m_Size: {x: 1.5787201, y: 2.125}
   m_EdgeRadius: 0
+--- !u!114 &1095448710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095448705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f3979321c004a54984b396ab141b351, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sightRange: 11.39
+  chargeTime: 0
+  speed: 0
+  timeBetweenAttacks: 5
+  rock: {fileID: 6274178455676715548, guid: 4f4e355d1ffd6cc47a5350586ae59a9d, type: 3}
+  rockSprites:
+  - {fileID: 1617906937, guid: 2d4c1a6709c53be438b0fd0a32e27ac7, type: 3}
+  - {fileID: 523225172, guid: 2d4c1a6709c53be438b0fd0a32e27ac7, type: 3}
+  - {fileID: -1330895757, guid: 2d4c1a6709c53be438b0fd0a32e27ac7, type: 3}
 --- !u!1 &1117598713
 GameObject:
   m_ObjectHideFlags: 0
@@ -2744,7 +2766,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2041242809}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: attackPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2962,6 +2984,10 @@ PrefabInstance:
     - target: {fileID: 1379466944261556956, guid: 6c6372cfe6b9900468d264ccd51763e4, type: 3}
       propertyPath: m_Name
       value: PlayerNero
+      objectReference: {fileID: 0}
+    - target: {fileID: 1379466945848611330, guid: 6c6372cfe6b9900468d264ccd51763e4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.03
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c6372cfe6b9900468d264ccd51763e4, type: 3}

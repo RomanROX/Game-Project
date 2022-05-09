@@ -21,34 +21,41 @@ public class WolfBehaviour : MonoBehaviour
     [SerializeField] float sightRange;
     [SerializeField] float chargeTime;
     [SerializeField] float speed;
+    bool isDashing;
 
     LayerMask playerMask;
-    float chargeTimer;
+    //float chargeTimer;
     float dashTimer;
     List<Collider2D> players = new List<Collider2D>();
     GameObject playerObj;
     Rigidbody2D rb;
+    Animator anim;
+    SpriteRenderer sr;
 
     private void Start()
     {
         currentHealth = maxHealth;
         playerObj = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
+
         playerMask = GameManager.Instance.LayerHolder.Player;
     }
     private void Update()
     {
-        chargeTimer -= Time.deltaTime;
+        //chargeTimer -= Time.deltaTime;
         dashTimer -= Time.deltaTime;
 
         CheckForPlayerInAttackRange();
 
-        if (CanSeePlayer() && chargeTimer <= 0&& dashTimer<=0)
+        if (CanSeePlayer() && /*chargeTimer <= 0&& */dashTimer<=0 && !isDashing)
         {
-            StartDash();
+            Debug.Log("should start dash");
+            StartCoroutine(Charge());
             //chargeTimer = chargeTime;
         }
-        else if (dashTimer <= 0)
+        else if (dashTimer <= 0 && isDashing)
         {
             StopDash();
         }
@@ -59,17 +66,38 @@ public class WolfBehaviour : MonoBehaviour
     {
         Vector2 distance = playerObj.transform.position-transform.position;
         float dir = distance.normalized.x;
+        if (dir ==1)
+            sr.flipX = false;
+        else if (dir ==-1)
+            sr.flipX = true;
         return dir;
     }
+
+    IEnumerator Charge()
+    {
+        Debug.Log("charging");
+        anim.SetTrigger("isCharging");
+        anim.ResetTrigger("Reset");
+        yield return new WaitForSeconds(chargeTime);
+        anim.ResetTrigger("isCharging");
+        StartDash();
+    }
+
     void StartDash()
     {
-
+        Debug.Log("started dash");
+        isDashing = true;
         dashTimer = dashTime;
         rb.velocity = Vector2.right*FindDashDir() * speed;
+        anim.SetTrigger("isDashing");
     }
     void StopDash()
     {
+        Debug.Log("Ended dash");
         rb.velocity = Vector2.zero;
+        isDashing=false;
+        anim.ResetTrigger("isDashing");
+        anim.SetTrigger("Reset");
     }
 
     public void TakeDamage(float dmg)
@@ -98,7 +126,7 @@ public class WolfBehaviour : MonoBehaviour
     {
         players = new List<Collider2D>();
 
-        players.AddRange(Physics2D.OverlapBoxAll(attackPos.position, attackRange, playerMask));
+        players.AddRange(Physics2D.OverlapBoxAll(attackPos.position, attackRange, 0f, playerMask));
 
         if (players.Count > 0)
         {
