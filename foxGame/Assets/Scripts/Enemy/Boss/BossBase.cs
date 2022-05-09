@@ -73,7 +73,7 @@ public class BossBase : MonoBehaviour
     {
 
         playerList = new List<Collider2D>(); 
-        playerList.AddRange(Physics2D.OverlapBoxAll(collidPos.position, collidRange, 0f, LayerHolder.Instance.Player));
+        playerList.AddRange(Physics2D.OverlapBoxAll(collidPos.position, collidRange, 0f, GameManager.Instance.LayerHolder.Player));
         
         Debug.Log(playerList.Count);
     }

@@ -75,8 +75,8 @@ public class EnemyAttackBehaviour : MonoBehaviour
     {
         players = new List<Collider2D>();
 
-        players.AddRange(Physics2D.OverlapCircleAll(leftAttackPoint.position, attackRange, LayerHolder.Instance.Player));
-        players.AddRange(Physics2D.OverlapCircleAll(rightAttackPoint.position, attackRange, LayerHolder.Instance.Player));
+        players.AddRange(Physics2D.OverlapCircleAll(leftAttackPoint.position, attackRange, GameManager.Instance.LayerHolder.Player));
+        players.AddRange(Physics2D.OverlapCircleAll(rightAttackPoint.position, attackRange, GameManager.Instance.LayerHolder.Player));
     }
     
     private void OnDrawGizmosSelected()

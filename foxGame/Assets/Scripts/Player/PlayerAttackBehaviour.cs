@@ -11,6 +11,8 @@ public class PlayerAttackBehaviour : MonoBehaviour
     [SerializeField] float attackDamage;
     [SerializeField] float attackRate;
 
+    LayerMask enemies_;
+
     [Header("Health")]
     [SerializeField] float timeBeforeDeath;
 
@@ -24,6 +26,7 @@ public class PlayerAttackBehaviour : MonoBehaviour
     private void Start()
     {
         currentHealth = GameManager.Instance.PlayerData.playerHealthNum;
+        enemies_ = GameManager.Instance.LayerHolder.Enemy_;
     }
     private void Update()
     {
@@ -44,16 +47,16 @@ public class PlayerAttackBehaviour : MonoBehaviour
 
     void CheckForEnemies()
     {
-        //enemies = new List<Collider2D>();
-        enemies.AddRange(Physics2D.OverlapCircleAll(leftAttackPoint.position, attackRange, LayerHolder.Instance.Enemy.value));
-        enemies.AddRange(Physics2D.OverlapCircleAll(rightAttackPoint.position, attackRange, LayerHolder.Instance.Enemy.value));
+        enemies = new List<Collider2D>();
+
+        enemies.AddRange(Physics2D.OverlapCircleAll(leftAttackPoint.position, attackRange, GameManager.Instance.LayerHolder.Enemy_));
+        enemies.AddRange(Physics2D.OverlapCircleAll(rightAttackPoint.position, attackRange, GameManager.Instance.LayerHolder.Enemy_));
     }
 
     void Attack()
     {
         foreach (Collider2D enemy in enemies)
         {
-            Debug.Log("found enemys");
             if (enemy.CompareTag("boss"))
             {
                 Debug.Log("Attack the boss");

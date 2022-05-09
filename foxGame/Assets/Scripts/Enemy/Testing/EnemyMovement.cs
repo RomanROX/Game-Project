@@ -38,8 +38,8 @@ public class EnemyMovement : MonoBehaviour
 
     void PlayerProximityCheck()
     {
-        player = new List<Collider2D>(Physics2D.OverlapCircleAll(transform.position, playerDetectionRange, LayerHolder.Instance.Player));
-        isDetectingPlayer = Physics2D.OverlapCircle(transform.position, playerDetectionRange, LayerHolder.Instance.Player);
+        player = new List<Collider2D>(Physics2D.OverlapCircleAll(transform.position, playerDetectionRange, GameManager.Instance.LayerHolder.Player));
+        isDetectingPlayer = Physics2D.OverlapCircle(transform.position, playerDetectionRange, GameManager.Instance.LayerHolder.Player);
     }
     void Move(float moveDir)
     {

@@ -85,13 +85,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isJumping && !isDashing)
         {
-            if (Physics2D.OverlapBox(feetPos.position, groundCheckRadious, 0f, LayerHolder.Instance.Ground))
+            if (Physics2D.OverlapBox(feetPos.position, groundCheckRadious, 0f, GameManager.Instance.LayerHolder.Ground))
                 lastOnGroundTime = data.coyoteTime;
 
-            if (Physics2D.OverlapBox(leftWallPos.position, wallCheckRadious, 0f, LayerHolder.Instance.Ground) && !IsRight)
+            if (Physics2D.OverlapBox(leftWallPos.position, wallCheckRadious, 0f, GameManager.Instance.LayerHolder.Ground) && !IsRight)
                 lastOnWallLeftTime = data.coyoteTime;
 
-            if (Physics2D.OverlapBox(rightWallPos.position, wallCheckRadious, 0f, LayerHolder.Instance.Ground) & IsRight)
+            if (Physics2D.OverlapBox(rightWallPos.position, wallCheckRadious, 0f, GameManager.Instance.LayerHolder.Ground) & IsRight)
                 lastOnWallRightTime = data.coyoteTime;
             lastOnWallTime = Mathf.Max(lastOnWallRightTime, lastOnWallLeftTime);
         }

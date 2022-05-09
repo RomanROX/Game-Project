@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public PlayerData PlayerData { get; private set; }
+    public LayerHolder LayerHolder{ get; private set; }
 
     private void Awake()
     {
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
         }else { DestroyImmediate(gameObject); }
+
         PlayerData = GetComponentInChildren<PlayerData>();
+        LayerHolder= GetComponentInChildren<LayerHolder>();
     }
 }

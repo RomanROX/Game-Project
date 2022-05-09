@@ -13,12 +13,12 @@ TagManager:
   - Player
   - Water
   - UI
-  - ground
-  - Enemy
+  - Ground
+  - Rock
   - Items
-  - platform
-  - boss
-  - rock
+  - Platform
+  - Boss
+  - Enemy
   - 
   - 
   - 
