@@ -5,25 +5,52 @@ using UnityEngine;
 public class OwlBehaviour : MonoBehaviour
 {
     [SerializeField] float sightRange;
+    [SerializeField] float maxHealth;
     [SerializeField] float timeBetweenAttacks;
+    [SerializeField] float timeBeforeDeath;
     [SerializeField] GameObject rock;
     [SerializeField] List<Sprite> rockSprites;
+    [SerializeField] GameObject drop;
+
 
     List<Collider2D> players = new List<Collider2D>();
     LayerMask playerMask;
     bool isAttacking;
     Animator anim;
+    float currentHealth;
 
     private void Start()
     {
         playerMask = GameManager.Instance.LayerHolder.Player;
         anim = GetComponent<Animator>();
+        currentHealth = maxHealth;
     }
 
     private void Update()
     {
         CheckForPlayerInSight();
 
+    }
+
+    public void TakeDamage(float dmg)
+    {
+        currentHealth -= dmg;
+
+        if (currentHealth <= 0) StartCoroutine(Die());
+    }
+    IEnumerator Die()
+    {
+        Debug.Log("die?");
+        yield return new WaitForSeconds(timeBeforeDeath);
+        DropItem();
+        Destroy(gameObject);
+    }
+    void DropItem()
+    {
+        if (drop != null)
+        {
+            Instantiate(drop, new Vector3(transform.position.x, transform.position.y + 0.2f), Quaternion.identity);
+        }
     }
 
     void CheckForPlayerInSight()
