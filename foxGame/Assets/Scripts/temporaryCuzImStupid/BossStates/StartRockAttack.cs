@@ -2,68 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashAttack : StateMachineBehaviour
+public class StartRockAttack : StateMachineBehaviour
 {
-    Transform player;
     BossBase bossBase;
     Rigidbody2D rb;
-    [SerializeField] float dashDuration;
-
+    //[SerializeField] float delayTillNextState;
 
     Vector2 spot;
+    float timer;
     float speed;
-    float dashTimer;
-    [SerializeField] float dashStopTime;
-
-    public float maxDistance = 1.5f;
-
-    
+    [SerializeField] float delayTillNextState;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         bossBase = animator.gameObject.GetComponent<BossBase>();
         rb = animator.gameObject.GetComponent<Rigidbody2D>();
+        spot = bossBase.DefaultSpot;
 
-        player = bossBase.PlayerObj.transform;
-        spot = player.position;
-        speed = bossBase.DashSpeed;
+        speed = bossBase.Speed;
         rb.gravityScale = 0;
-        dashTimer = dashDuration;
+        timer = delayTillNextState;
 
-        DashStart();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        dashTimer-=Time.fixedDeltaTime;
-
-        if (dashTimer < 0)
-        {
-            DashStop();
-            animator.SetInteger("DashNum", animator.GetInteger("DashNum") + 1);
-            animator.SetTrigger("FlyUp");
-        }
+        Move();
+        if (CheckDistance())
+            timer -= Time.fixedDeltaTime;
+        if (timer < 0)
+            animator.SetTrigger("RockAttack");
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.ResetTrigger("FlyUp");
+        animator.ResetTrigger("RockAttack");
     }
 
-    void DashStart()
+    bool CheckDistance()
     {
-        rb.velocity = DashDirection()*speed*Time.fixedDeltaTime;
+        float dis = Vector2.Distance((Vector2)bossBase.transform.position, spot);
+        return dis < 1.5f;
     }
-    void DashStop()
+    void Move()
     {
-        rb.velocity = Vector2.zero;
-    }
-    Vector2 DashDirection()
-    {
-        return new Vector2(spot.x - rb.transform.position.x, spot.y - rb.transform.position.y);
+        //Debug.Log("should move");
+        Vector2 currentPos = bossBase.transform.position;
+
+        Vector2 final = Vector2.MoveTowards(currentPos, spot, speed * Time.fixedDeltaTime);
+        rb.MovePosition(final);
     }
 
 }

@@ -52,7 +52,7 @@ MonoBehaviour:
     m_Bits: 576
   enemy:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 3200
 --- !u!1 &5779757945571212858
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,15 +150,15 @@ MonoBehaviour:
   runDeccel: 15
   airAccel: 0.65
   wallJumpTime: 0.35
-  dashAttackTime: 0.15
+  dashAttackTime: 0.25
   dashEndTime: 0.1
   dashBufferTime: 0.05
   speed: 15
-  jumpSpeed: 25
+  jumpSpeed: 30
   gravityScale: 10
   fallingGravityScale: 7
-  dashSpeed: 20
-  wallJumpForce: {x: 15, y: 25}
+  dashSpeed: 30
+  wallJumpForce: {x: 15, y: 30}
   dashAmount: 1
   jumpAmount: 1
   isDashUnlocked: 0

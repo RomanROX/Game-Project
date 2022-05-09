@@ -334,7 +334,9 @@ public class PlayerMovement : MonoBehaviour
                 player.SetHealth(1);
             }
         }
-            
-
+    }
+    public void SetStateToAttack()
+    {
+        PlayerState_ = PlayerState.Attacking;
     }
 }

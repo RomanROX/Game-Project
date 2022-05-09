@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 81fe35b26002c074eb43a02a699bb311
+guid: 2d4c1a6709c53be438b0fd0a32e27ac7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,13 +104,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: boss_dash_0
+      name: rock_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 20
-        width: 62
-        height: 32
+        x: 0
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44706047408871548af8f0d8dfe6f712
-      internalID: 27565509
+      spriteID: ca2ac2ce715ede049b589182763b61fc
+      internalID: 1617906937
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_dash_1
+      name: rock_1
       rect:
         serializedVersion: 2
-        x: 65
-        y: 19
-        width: 62
-        height: 33
+        x: 16
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -139,8 +139,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 169aaa068312b20439308026380e6dda
-      internalID: -736635687
+      spriteID: c1de391ae6e7bb043a022dbe1b7721b0
+      internalID: 523225172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rock_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54819c9bf24138f47ae67af3ec5e3291
+      internalID: -1330895757
       vertices: []
       indices: 
       edges: []
@@ -156,8 +177,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      boss_dash_0: 27565509
-      boss_dash_1: -736635687
+      rock_2: -1330895757
+      rock_0: 1617906937
+      rock_1: 523225172
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

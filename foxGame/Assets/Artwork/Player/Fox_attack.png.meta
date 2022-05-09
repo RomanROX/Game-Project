@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 81fe35b26002c074eb43a02a699bb311
+guid: f8ae0fd803f94794c9629b635d9ae068
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,13 +104,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: boss_dash_0
+      name: Fox_attack_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 20
-        width: 62
-        height: 32
+        y: 3
+        width: 30
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44706047408871548af8f0d8dfe6f712
-      internalID: 27565509
+      spriteID: ea4fd7d193fa48c459c46267c3afac76
+      internalID: 1689734530
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: boss_dash_1
+      name: Fox_attack_1
       rect:
         serializedVersion: 2
-        x: 65
-        y: 19
-        width: 62
-        height: 33
+        x: 33
+        y: 3
+        width: 30
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -139,8 +139,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 169aaa068312b20439308026380e6dda
-      internalID: -736635687
+      spriteID: 359b07524ee90ee438c782e9c7402244
+      internalID: -1655917608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fox_attack_2
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 3
+        width: 30
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e833fa67c7152441afadde50f001c8a
+      internalID: 1554537139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fox_attack_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 3
+        width: 31
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b7716ee3fcbf5d4793b3fbfbd82e972
+      internalID: -2049096842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fox_attack_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 3
+        width: 31
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce49b6f0199b82e4b89b699e6059fbbf
+      internalID: 218367132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fox_attack_5
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 3
+        width: 30
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b148fa9ef61cc76429c4fd4347aaabb8
+      internalID: -1074942578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fox_attack_6
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 3
+        width: 30
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93fd22b683f69ce44812dd3f1076e19c
+      internalID: -230760168
       vertices: []
       indices: 
       edges: []
@@ -156,8 +261,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      boss_dash_0: 27565509
-      boss_dash_1: -736635687
+      Fox_attack_4: 218367132
+      Fox_attack_3: -2049096842
+      Fox_attack_2: 1554537139
+      Fox_attack_1: -1655917608
+      Fox_attack_6: -230760168
+      Fox_attack_5: -1074942578
+      Fox_attack_0: 1689734530
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

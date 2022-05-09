@@ -31,6 +31,7 @@ public class PlayerAttackBehaviour : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && attackTimer <= 0)
         {
+            GetComponent<PlayerMovement>().SetStateToAttack();
             Debug.Log("should Attack");
             Attack();
             attackTimer = attackRate;
@@ -46,7 +47,10 @@ public class PlayerAttackBehaviour : MonoBehaviour
         
         foreach (Collider2D enemy in enemies)
         {
-            enemy.GetComponent<EnemyAttackBehaviour>().TakeDamage(attackDamage);
+            if (enemy.CompareTag("boss"))
+                enemy.GetComponent<BossBase>().TakeDamage(attackDamage);
+            else if(enemy.CompareTag("Enemy"))
+                enemy.GetComponent<EnemyAttackBehaviour>().TakeDamage(attackDamage);
         }
     }
     public void SetHealth(float num)
