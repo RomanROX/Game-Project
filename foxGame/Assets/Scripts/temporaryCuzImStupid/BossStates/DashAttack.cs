@@ -55,15 +55,15 @@ public class DashAttack : StateMachineBehaviour
 
     void DashStart()
     {
-        rb.velocity = DashDirection()*speed*Time.fixedDeltaTime;
+        rb.velocity = Vector2.right*DashDirection()*speed;
     }
     void DashStop()
     {
         rb.velocity = Vector2.zero;
     }
-    Vector2 DashDirection()
+    float DashDirection()
     {
-        return new Vector2(spot.x - rb.transform.position.x, spot.y - rb.transform.position.y);
+        return (spot.x-rb.transform.position.x > 0)? 1: -1;
     }
 
 }

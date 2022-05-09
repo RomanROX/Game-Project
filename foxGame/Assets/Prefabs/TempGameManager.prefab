@@ -52,7 +52,7 @@ MonoBehaviour:
     m_Bits: 576
   enemy:
     serializedVersion: 2
-    m_Bits: 3200
+    m_Bits: 1152
 --- !u!1 &5779757945571212858
 GameObject:
   m_ObjectHideFlags: 0

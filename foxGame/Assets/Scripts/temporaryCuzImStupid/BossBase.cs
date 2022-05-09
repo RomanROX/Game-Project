@@ -19,6 +19,7 @@ public class BossBase : MonoBehaviour
     [SerializeField] GameObject rockSpawner;
     [SerializeField] GameObject player;
 
+    [SerializeField] Transform collidPos;
     [SerializeField] Vector2 collidRange;
 
     float currentHealth;
@@ -72,7 +73,7 @@ public class BossBase : MonoBehaviour
     {
 
         playerList = new List<Collider2D>(); 
-        playerList.AddRange(Physics2D.OverlapBoxAll(transform.position, collidRange, 0f, LayerHolder.Instance.Player));
+        playerList.AddRange(Physics2D.OverlapBoxAll(collidPos.position, collidRange, 0f, LayerHolder.Instance.Player));
         
         Debug.Log(playerList.Count);
     }
@@ -88,14 +89,14 @@ public class BossBase : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         currentHealth -= dmg;
+        Debug.Log("enemy health " + currentHealth);
+
         if (currentHealth<=0)
-        {
             Destroy(gameObject);
-        }
     }
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireCube(transform.position, collidRange);
+        Gizmos.DrawWireCube(collidPos.position, collidRange);
     }
 }

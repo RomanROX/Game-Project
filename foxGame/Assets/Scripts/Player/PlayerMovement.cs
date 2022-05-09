@@ -55,9 +55,10 @@ public class PlayerMovement : MonoBehaviour
     int dashesLeft;
     int jumpsLeft;
 
+    float lastAttack;
 
 
-    PlayerState PlayerState_;
+    PlayerState PlayerState_ = PlayerState.Idle;
 
     void Start()
     {
@@ -78,6 +79,8 @@ public class PlayerMovement : MonoBehaviour
 
         lastPressedJumpTime -= Time.deltaTime;
         lastPressedDashTime-=Time.deltaTime;
+
+        lastAttack -= Time.deltaTime;
         #endregion
 
         if (!isJumping && !isDashing)
@@ -311,9 +314,13 @@ public class PlayerMovement : MonoBehaviour
         if (isDashing)
             PlayerState_ = PlayerState.Dashing;
 
+        if (lastAttack > 0)
+            PlayerState_ = PlayerState.Attacking;
 
         anim.SetInteger("State", (int)PlayerState_);
         anim.SetBool("isRight", IsRight);
+
+        
     }
     
 
@@ -337,6 +344,6 @@ public class PlayerMovement : MonoBehaviour
     }
     public void SetStateToAttack()
     {
-        PlayerState_ = PlayerState.Attacking;
+        lastAttack = 0.1f;
     }
 }

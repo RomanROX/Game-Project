@@ -29,27 +29,38 @@ public class PlayerAttackBehaviour : MonoBehaviour
     {
         attackTimer -= Time.deltaTime;
 
+        CheckForEnemies();
+
         if (Input.GetKeyDown(KeyCode.E) && attackTimer <= 0)
         {
             GetComponent<PlayerMovement>().SetStateToAttack();
+
             Debug.Log("should Attack");
             Attack();
             attackTimer = attackRate;
         }
+        //Physics2D.OverlapCircleAll()
+    }
 
+    void CheckForEnemies()
+    {
+        //enemies = new List<Collider2D>();
+        enemies.AddRange(Physics2D.OverlapCircleAll(leftAttackPoint.position, attackRange, LayerHolder.Instance.Enemy.value));
+        enemies.AddRange(Physics2D.OverlapCircleAll(rightAttackPoint.position, attackRange, LayerHolder.Instance.Enemy.value));
     }
 
     void Attack()
     {
-        enemies = new List<Collider2D>();
-        enemies.AddRange(Physics2D.OverlapCircleAll(leftAttackPoint.position, attackRange, LayerHolder.Instance.Enemy));
-        enemies.AddRange(Physics2D.OverlapCircleAll(rightAttackPoint.position, attackRange, LayerHolder.Instance.Enemy));
-        
         foreach (Collider2D enemy in enemies)
         {
+            Debug.Log("found enemys");
             if (enemy.CompareTag("boss"))
+            {
+                Debug.Log("Attack the boss");
                 enemy.GetComponent<BossBase>().TakeDamage(attackDamage);
-            else if(enemy.CompareTag("Enemy"))
+            }
+
+            else if (enemy.CompareTag("Enemy"))
                 enemy.GetComponent<EnemyAttackBehaviour>().TakeDamage(attackDamage);
         }
     }

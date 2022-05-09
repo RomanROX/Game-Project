@@ -42,7 +42,7 @@ public class FallAttack : StateMachineBehaviour
     bool CheckDistance()
     {
         float dis = Vector2.Distance((Vector2)bossBase.transform.position, spot);
-        return dis < 1.5f;
+        return dis < 2;
     }
     void Move()
     {
