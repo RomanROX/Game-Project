@@ -63,8 +63,10 @@ public class PlayerAttackBehaviour : MonoBehaviour
                 enemy.GetComponent<BossBase>().TakeDamage(attackDamage);
             }
 
-            else if (enemy.CompareTag("Enemy"))
-                enemy.GetComponent<EnemyAttackBehaviour>().TakeDamage(attackDamage);
+            else if (enemy.CompareTag("Wolf"))
+                enemy.GetComponent<WolfBehaviour>().TakeDamage(attackDamage);
+            else if (enemy.CompareTag("Owl"))
+                enemy.GetComponent<OwlBehaviour>().TakeDamage(attackDamage);
         }
     }
     public void SetHealth(float num)
