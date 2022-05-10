@@ -10,9 +10,12 @@ public class GameManager : MonoBehaviour
     public LayerHolder LayerHolder{ get; private set; }
 
     public GameObject HealthUI;
-    public GameObject heartHolder;
+    public GameObject PauseUI;
+
     public List<Sprite> UIHeartStates;
     public List<Image> UIHearts;
+
+    bool isPaused = false;
 
     private void Awake()
     {
@@ -26,7 +29,16 @@ public class GameManager : MonoBehaviour
         LayerHolder = Instance.GetComponentInChildren<LayerHolder>();
     }
 
-    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPaused = !isPaused;
+            PauseUI.SetActive(isPaused);
+            Time.timeScale = isPaused? 0.0f : 1.0f;
+        }
+    }
+
     public void AddMaxHealth(int num)
     {
         UIHearts[num-1].gameObject.SetActive(true);
@@ -61,5 +73,11 @@ public class GameManager : MonoBehaviour
             }
         }
         Debug.Log("halfpoint: " + halfpoint + "\nempty: " + empty);
+    }
+    public void ResumePauseMenu()
+    {
+        isPaused=false;
+        PauseUI.SetActive(false);
+        Time.timeScale = 1;
     }
 }
