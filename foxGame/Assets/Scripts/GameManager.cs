@@ -45,6 +45,9 @@ public class GameManager : MonoBehaviour
         PlayerData.isDashUnlocked = false;
         PlayerData.isWallJumpUnlocked= false;
         PlayerData.jumpAmount = 1;
+        UIHearts[3].gameObject.SetActive(false);
+        UIHearts[4].gameObject.SetActive(false);
+        UpdateHeartState(PlayerData.playerHealthNum);
     }
     public void AddMaxHealth(int num)
     {

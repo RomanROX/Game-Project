@@ -77,11 +77,12 @@ public class PlayerAttackBehaviour : MonoBehaviour
         currentHealth += num;
         if (currentHealth>GameManager.Instance.PlayerData.playerHealthNum)
             currentHealth = GameManager.Instance.PlayerData.playerHealthNum;
-
-        GameManager.Instance.UpdateHeartState(currentHealth);
+        
 
         Debug.Log("Player health: " + currentHealth);
         if (currentHealth <= 0) StartCoroutine(Die());
+
+        GameManager.Instance.UpdateHeartState(currentHealth);
     }
 
     IEnumerator Die()

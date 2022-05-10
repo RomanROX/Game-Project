@@ -32,6 +32,7 @@ public class WolfBehaviour : MonoBehaviour
     Animator anim;
     SpriteRenderer sr;
 
+
     private void Start()
     {
         currentHealth = maxHealth;
@@ -47,7 +48,8 @@ public class WolfBehaviour : MonoBehaviour
         //chargeTimer -= Time.deltaTime;
         dashTimer -= Time.deltaTime;
 
-        CheckForPlayerInAttackRange();
+        if (isDashing)
+            CheckForPlayerInAttackRange();
 
         if (CanSeePlayer() && /*chargeTimer <= 0&& */dashTimer<=0 && !isDashing)
         {
