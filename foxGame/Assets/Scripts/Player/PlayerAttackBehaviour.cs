@@ -42,6 +42,8 @@ public class PlayerAttackBehaviour : MonoBehaviour
             Attack();
             attackTimer = attackRate;
         }
+
+
         //Physics2D.OverlapCircleAll()
     }
 
@@ -72,6 +74,11 @@ public class PlayerAttackBehaviour : MonoBehaviour
     public void SetHealth(float num)
     {
         currentHealth += num;
+        if (currentHealth>GameManager.Instance.PlayerData.playerHealthNum)
+            currentHealth = GameManager.Instance.PlayerData.playerHealthNum;
+
+        GameManager.Instance.UpdateHeartState(currentHealth);
+
         Debug.Log("Player health: " + currentHealth);
         if (currentHealth <= 0) StartCoroutine(Die());
     }

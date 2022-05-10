@@ -110,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
                 isWallJumping = true;
                 isJumping = false;
                 wallJumpStartTime = Time.time;
-                lastWallJumpDir = (lastOnWallRightTime > 0) ? -1 : 1;
+                lastWallJumpDir = (lastOnWallRightTime > 0) ? 1 : -1;
 
                 WallJump();
             }
@@ -173,6 +173,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         InputCallbacks();
+
+       
+       
 
 
         animate();
@@ -344,12 +347,10 @@ public class PlayerMovement : MonoBehaviour
             data.isWallJumpUnlocked = true;
         else if (type == ItemType.HeartContainer)
         {
-            PlayerAttackBehaviour player = GetComponent<PlayerAttackBehaviour>();
-            if (player.CurrentHealth < data.playerHealthNum)
-            {
-                player.SetHealth(1);
-            }
             data.AddMaxHealth();
+            PlayerAttackBehaviour player = GetComponent<PlayerAttackBehaviour>();
+            player.SetHealth(10);
+            
         }
     }
     public void SetStateToAttack()

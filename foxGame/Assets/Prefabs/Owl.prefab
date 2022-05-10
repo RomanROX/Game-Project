@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightRange: 11.39
-  maxHealth: 5
+  maxHealth: 8
   timeBetweenAttacks: 5
   timeBeforeDeath: 0
   rock: {fileID: 6274178455676715548, guid: 4f4e355d1ffd6cc47a5350586ae59a9d, type: 3}

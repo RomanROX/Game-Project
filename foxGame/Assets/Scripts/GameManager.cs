@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class GameManager : MonoBehaviour
     public PlayerData PlayerData { get; private set; }
     public LayerHolder LayerHolder{ get; private set; }
 
+    public GameObject HealthUI;
+    public GameObject heartHolder;
+    public List<Sprite> UIHeartStates;
+    public List<Image> UIHearts;
 
     private void Awake()
     {
@@ -20,8 +25,41 @@ public class GameManager : MonoBehaviour
         PlayerData = Instance.GetComponentInChildren<PlayerData>();
         LayerHolder = Instance.GetComponentInChildren<LayerHolder>();
     }
-    private void Start()
+
+    
+    public void AddMaxHealth(int num)
     {
-        
+        UIHearts[num-1].gameObject.SetActive(true);
+        for (int i = 0; i < num; i++)
+        {
+            UIHearts[i].sprite = UIHeartStates[(int)UIHeartState.whole];
+        }
+    }
+    public void UpdateHeartState(float health)
+    {
+        int halfpoint = (int)(health / 2 + 0.5f);
+        //Debug.Log(Mathf.Abs(health / 2));
+        if (health/2 != Mathf.Round(health / 2))
+        {
+            Debug.Log("health is half");
+            UIHearts[halfpoint-1].sprite = UIHeartStates[(int)UIHeartState.half];
+        }
+
+        int empty = halfpoint + 1;
+
+        if (empty <= PlayerData.playerHealthNum/2)
+        {
+            Debug.Log("health is empty");
+            UIHearts[empty-1].sprite = UIHeartStates[(int)UIHeartState.empty];
+        }
+        if (halfpoint>0)
+        {
+            Debug.Log("health is full");
+            for (int i = halfpoint-1; i > 0; i--)
+            {
+                UIHearts[i-1].sprite = UIHeartStates[(int)UIHeartState.whole];
+            }
+        }
+        Debug.Log("halfpoint: " + halfpoint + "\nempty: " + empty);
     }
 }
