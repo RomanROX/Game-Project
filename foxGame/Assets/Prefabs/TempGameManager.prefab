@@ -563,9 +563,9 @@ MonoBehaviour:
   dashAttackTime: 0.25
   dashEndTime: 0.1
   dashBufferTime: 0.05
-  speed: 15
-  jumpSpeed: 30
-  gravityScale: 10
+  speed: 10
+  jumpSpeed: 25
+  gravityScale: 7.5
   fallingGravityScale: 7
   dashSpeed: 30
   wallJumpForce: {x: 15, y: 30}
