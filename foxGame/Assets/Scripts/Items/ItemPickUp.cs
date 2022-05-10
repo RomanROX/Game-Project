@@ -13,6 +13,9 @@ public class ItemPickUp : MonoBehaviour
 {
     [SerializeField] Vector2 colisionRadious;
     [SerializeField] ItemType itemType;
+
+    bool isPickup;
+    Collider2D player;
     
     //LayerHolder layerHolder;
 
@@ -20,14 +23,18 @@ public class ItemPickUp : MonoBehaviour
     private void Update()
     {
         checkForPlayer();
+        if (isPickup)
+        {
+            player.GetComponent<PlayerMovement>().UnlockAbility(itemType);
+        }
     }
     void checkForPlayer()
     {
         if (Physics2D.OverlapBox(transform.position, colisionRadious, 0f, GameManager.Instance.LayerHolder.Player))
         {
-            Collider2D obj = Physics2D.OverlapBox(transform.position, colisionRadious, 0f, GameManager.Instance.LayerHolder.Player);
-            obj.GetComponent<PlayerMovement>().UnlockAbility(itemType);
-            Destroy(gameObject);
+            player = Physics2D.OverlapBox(transform.position, colisionRadious, 0f, GameManager.Instance.LayerHolder.Player);
+            isPickup = true;
+            Destroy(this.gameObject);
         }
     }
     

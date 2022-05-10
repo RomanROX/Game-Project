@@ -1,6 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+enum UIHeartState
+{
+    whole,
+    half,
+    empty
+}
 
 public class PlayerData : MonoBehaviour
 {
@@ -34,7 +40,7 @@ public class PlayerData : MonoBehaviour
 
     public void AddMaxHealth()
     {
-        playerHealthNum++;
-
+        playerHealthNum+=2;
+        GameManager.Instance.AddMaxHealth(playerHealthNum/2);
     }
 }

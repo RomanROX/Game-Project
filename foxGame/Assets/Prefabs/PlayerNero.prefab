@@ -164,7 +164,7 @@ MonoBehaviour:
   leftAttackPoint: {fileID: 1379466945878459024}
   rightAttackPoint: {fileID: 1379466944389650804}
   attackRange: 0.25
-  attackDamage: 5
+  attackDamage: 2
   attackRate: 0.5
   timeBeforeDeath: 0
   isRight: 0
