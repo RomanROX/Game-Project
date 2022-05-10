@@ -67,20 +67,27 @@ public class OwlBehaviour : MonoBehaviour
         else if (players.Count == 0 && isAttacking)
         {
             StopAllCoroutines();
+            isAttacking = false;
         }
     }
 
     IEnumerator SpawnRock()
     {
 
+
+        
+
+        yield return new WaitForSeconds(timeBetweenAttacks);
+
         anim.SetTrigger("Throw");
+        
         GameObject obj = rock;
         obj.GetComponent<SpriteRenderer>().sprite = GetRandomRockSprite();
         Instantiate(obj, transform.position, Quaternion.identity);
 
-        yield return new WaitForSeconds(timeBetweenAttacks);
         anim.ResetTrigger("Throw");
-        StartCoroutine(SpawnRock());
+        isAttacking = false;
+        //StartCoroutine(SpawnRock());
     }
 
     Sprite GetRandomRockSprite()
