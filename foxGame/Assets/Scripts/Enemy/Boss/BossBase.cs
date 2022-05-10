@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BossBase : MonoBehaviour
 {
@@ -91,8 +92,11 @@ public class BossBase : MonoBehaviour
         currentHealth -= dmg;
         Debug.Log("enemy health " + currentHealth);
 
-        if (currentHealth<=0)
+        if (currentHealth <= 0)
+        {
             Destroy(gameObject);
+            SceneManager.LoadScene("CongratulationsScene");
+        }
     }
 
     private void OnDrawGizmosSelected()
