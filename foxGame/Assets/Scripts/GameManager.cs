@@ -39,6 +39,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ResetAllValues()
+    {
+        PlayerData.playerHealthNum = 6;
+        PlayerData.isDashUnlocked = false;
+        PlayerData.isWallJumpUnlocked= false;
+        PlayerData.jumpAmount = 1;
+    }
     public void AddMaxHealth(int num)
     {
         UIHearts[num-1].gameObject.SetActive(true);

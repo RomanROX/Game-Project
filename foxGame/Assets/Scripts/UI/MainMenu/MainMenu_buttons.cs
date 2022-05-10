@@ -11,6 +11,7 @@ public class MainMenu_buttons : MonoBehaviour
     //Play button
     public void Play()
     {
+        GameManager.Instance.ResetAllValues();
         SceneManager.LoadScene(SceneName);
     }
     //Quit button
