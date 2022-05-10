@@ -125,10 +125,19 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isDashing)
         {
-            if (rb.velocity.y >= 0)
+            if (rb.velocity.y >= 0 || lastOnGroundTime>0)
+            {
                 rb.gravityScale = data.gravityScale;
-            else
+                Debug.Log("noraml gravity");
+            }
+            else 
+            { 
                 rb.gravityScale = data.fallingGravityScale;
+                Debug.Log("falling gravity");
+            }
+            //Debug.Log(rb.velocity.y);
+            Debug.Log("----------( "+Mathf.Sign(rb.velocity.x));
+
         }
 
         if (DashAttackOver())
@@ -167,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         animate();
-
+        //Debug.Log("Vel: " + rb.velocity);
 
         //Debug.Log("Playerstate: "+PlayerState_);
 
@@ -181,7 +190,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //rb.velocity = new Vector2(rb.velocity.x, -fallingGravityScale);
             rb.AddForce(new Vector2(0, -data.fallingGravityScale), ForceMode2D.Force);
-            PlayerState_ = PlayerState.Falling;
+            //PlayerState_ = PlayerState.Falling;
         }
     }
 
@@ -308,7 +317,7 @@ public class PlayerMovement : MonoBehaviour
         if ((horizontal==0 || rb.velocity==Vector2.zero) && !isJumping)
             PlayerState_ = PlayerState.Idle;
 
-        if (rb.velocity.y<0)
+        if (rb.velocity.y<0 && lastOnGroundTime<0)
             PlayerState_ = PlayerState.Falling;
 
         if (isDashing)
