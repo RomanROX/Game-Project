@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public PlayerData PlayerData { get; private set; }
     public LayerHolder LayerHolder{ get; private set; }
 
+
     private void Awake()
     {
         if (Instance is null)
