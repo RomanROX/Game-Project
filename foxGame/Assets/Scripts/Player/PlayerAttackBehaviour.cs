@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerAttackBehaviour : MonoBehaviour
 {
@@ -87,6 +88,7 @@ public class PlayerAttackBehaviour : MonoBehaviour
     {
         Debug.Log("Player died");
         yield return new WaitForSeconds(timeBeforeDeath);
+        SceneManager.LoadScene("DeathScene");
         //Destroy(gameObject);
     }
 
