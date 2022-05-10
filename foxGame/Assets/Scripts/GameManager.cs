@@ -14,9 +14,13 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this);
-        }else { DestroyImmediate(gameObject); }
+        }else { Debug.Log("Destroied gm"); DestroyImmediate(gameObject); }
 
-        PlayerData = GetComponentInChildren<PlayerData>();
-        LayerHolder= GetComponentInChildren<LayerHolder>();
+        PlayerData = Instance.GetComponentInChildren<PlayerData>();
+        LayerHolder = Instance.GetComponentInChildren<LayerHolder>();
+    }
+    private void Start()
+    {
+        
     }
 }
