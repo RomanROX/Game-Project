@@ -88,10 +88,10 @@ public class PlayerMovement : MonoBehaviour
             if (Physics2D.OverlapBox(feetPos.position, groundCheckRadious, 0f, GameManager.Instance.LayerHolder.Ground))
                 lastOnGroundTime = data.coyoteTime;
 
-            if (Physics2D.OverlapBox(leftWallPos.position, wallCheckRadious, 0f, GameManager.Instance.LayerHolder.Ground) && !IsRight)
+            if (Physics2D.OverlapBox(leftWallPos.position, wallCheckRadious, 0f, GameManager.Instance.LayerHolder.Ground) /*&& !IsRight*/)
                 lastOnWallLeftTime = data.coyoteTime;
 
-            if (Physics2D.OverlapBox(rightWallPos.position, wallCheckRadious, 0f, GameManager.Instance.LayerHolder.Ground) & IsRight)
+            if (Physics2D.OverlapBox(rightWallPos.position, wallCheckRadious, 0f, GameManager.Instance.LayerHolder.Ground) /*& IsRight*/)
                 lastOnWallRightTime = data.coyoteTime;
             lastOnWallTime = Mathf.Max(lastOnWallRightTime, lastOnWallLeftTime);
         }
@@ -345,10 +345,11 @@ public class PlayerMovement : MonoBehaviour
         else if (type == ItemType.HeartContainer)
         {
             PlayerAttackBehaviour player = GetComponent<PlayerAttackBehaviour>();
-            if (player.CurrentHealth<data.playerHealthNum)
+            if (player.CurrentHealth < data.playerHealthNum)
             {
                 player.SetHealth(1);
             }
+            data.AddMaxHealth();
         }
     }
     public void SetStateToAttack()

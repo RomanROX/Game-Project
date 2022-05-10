@@ -31,4 +31,10 @@ public class PlayerData : MonoBehaviour
 
     public bool isDashUnlocked;
     public bool isWallJumpUnlocked;
+
+    public void AddMaxHealth()
+    {
+        playerHealthNum++;
+
+    }
 }
