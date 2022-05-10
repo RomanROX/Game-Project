@@ -6,7 +6,7 @@ public class RockBehaviour : MonoBehaviour
 {
     private void Start()
     {
-        StartCoroutine(DestroySelf(1.8f));
+        StartCoroutine(DestroySelf(3.2f));
     }
 
     IEnumerator DestroySelf(float time)
